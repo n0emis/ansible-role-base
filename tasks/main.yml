@@ -13,4 +13,4 @@
       owner: root
       group: root
       mode: 0644
-    when: motd_path and motd_path != ''
+    when: motd_path is not undefined and motd_path != ''
