@@ -8,7 +8,7 @@
   - "{{ users }}"
 
 - name: get bash's path
-  shell: command -v bash
+  command: command -v bash
   register: bash_path
   changed_when: false
 
@@ -26,35 +26,35 @@
                   state=present exclusive=yes
   with_items:
   - "{{ users }}"
-  when: item.state != 'absent' and item.public_key is defined and item.public_key != ''
+  when: item.state != 'absent' and item.public_key is defined
 
 - name: add user to root's authorized_keys
   authorized_key: user="root" manage_dir=true key="{{ item.public_key }}"
                   state=present
   with_items:
   - "{{ users }}"
-  when: item.state != 'absent' and item.public_key is defined and item.public_key != ''
+  when: item.state != 'absent' and item.public_key is defined
 
 - name: remove user from root's authorized_keys
   authorized_key: user="root" manage_dir=true key="{{ item.public_key }}"
                 state=absent
   with_items:
   - "{{ users }}"
-  when: item.state == 'absent' and item.public_key is defined and item.public_key != ''
+  when: item.state == 'absent' and item.public_key is defined
 
 - name: create pve admin-group
-  shell:
+  command:
     cmd: 'pveum groupadd admin -comment "System Administrators"'
   when: "'proxmox' in group_names"
   ignore_errors: True
 
 - name: give pve admin-group privileges
-  shell:
+  command:
     cmd: 'pveum aclmod / -group admin -role Administrator'
   when: "'proxmox' in group_names"
 
 - name: create pve user
-  shell:
+  command:
     cmd: 'pveum useradd {{ item.name }}@pam'
   with_items:
   - "{{ users }}"
@@ -62,7 +62,7 @@
   ignore_errors: True
 
 - name: disable pve user
-  shell:
+  command:
     cmd: 'pveum usermod {{ item.name }}@pam -enable 0'
   with_items:
   - "{{ users }}"
@@ -70,7 +70,7 @@
   ignore_errors: True
 
 - name: add user to pve admin group
-  shell:
+  command:
     cmd: 'pveum usermod {{ item.name }}@pam -group admin'
   with_items:
   - "{{ users }}"
