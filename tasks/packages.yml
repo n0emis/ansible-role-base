@@ -26,5 +26,7 @@
     - python3-pip
     - python-setuptools
     - python3-setuptools
+    - rsync
+    - gnupg
     state: present
   tags: packages
