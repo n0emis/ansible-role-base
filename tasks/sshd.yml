@@ -1,14 +1,14 @@
 ---
 - name: Restrict SSH to public key authentication
-    lineinfile:
-      path: /etc/ssh/sshd_config
-      regexp: '^#?AuthenticationMethods '
-      line: 'AuthenticationMethods publickey'
-    service: name=sshd state=restarted
-  
-  - name: Disable SSH password authentication
-    lineinfile:
-      path: /etc/ssh/sshd_config
-      regexp: '^#?PasswordAuthentication '
-      line: 'PasswordAuthentication no'
-    service: name=sshd state=restarted
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?AuthenticationMethods '
+    line: 'AuthenticationMethods publickey'
+  notify: reload sshd service
+
+- name: Disable SSH password authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication '
+    line: 'PasswordAuthentication no'
+  notify: reload sshd service

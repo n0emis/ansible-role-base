@@ -2,4 +2,4 @@
 dependencies:
 # - role: ssh_server
 #   tags: ['ssh', 'sshd']
- - role: jnv.unattended-upgrades
+- role: jnv.unattended-upgrades
