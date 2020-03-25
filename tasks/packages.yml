@@ -28,5 +28,7 @@
     - python3-setuptools
     - rsync
     - gnupg
+    - sudo
+    - curl
     state: present
   tags: packages

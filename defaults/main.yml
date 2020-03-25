@@ -2,3 +2,5 @@
 users:
 - { name: 'user', state: 'present', public_key: '' }
 - { name: 'nouser', state: 'absent', public_key: '' }
+
+system_locale: en_US.UTF-8

@@ -1,0 +1,17 @@
+- name: Ensure localisation files for '{{ system_locale }}' are available
+  locale_gen:
+    name: "{{ system_locale }}"
+    state: present
+
+- name: Get current locale and language configuration
+  command: localectl status
+  register: locale_status
+  changed_when: false
+
+- name: Parse 'LANG' from current locale and language configuration
+  set_fact:
+    locale_lang: "{{ locale_status.stdout | regex_search('LANG=([^\n]+)', '\\1') | first }}"
+
+- name: Configure locale to '{{ system_locale }}'
+  command: localectl set-locale LANG={{ system_locale }}
+  changed_when: locale_lang != system_locale
