@@ -8,21 +8,21 @@
   - "{{ users }}"
 
 - name: get bash's path
-  command: command -v bash
+  command: which bash
   register: bash_path
   changed_when: false
 
 - name: create user
   user: state=present
-        name="{{ item.name }}"
-        groups="sudo,adm" append=yes
+        name="{{ item.username if item.username is defined else item.name }}"
+        groups="{{ "sudo,adm" if item.sudo is defined and item.sudo }}" append=yes
         shell={{ item.shell | default(bash_path.stdout) }}
   with_items:
   - "{{ users }}"
   when: item.state != 'absent'
 
 - name: add user's authorized_keys
-  authorized_key: user="{{ item.name }}" manage_dir=true key="{{ item.public_key }}"
+  authorized_key: user="{{ item.username if item.username is defined else item.name }}" manage_dir=true key="{{ item.public_key }}"
                   state=present exclusive=yes
   with_items:
   - "{{ users }}"
@@ -55,7 +55,7 @@
 
 - name: create pve user
   command:
-    cmd: 'pveum useradd {{ item.name }}@pam'
+    cmd: 'pveum useradd {{ item.username if item.username is defined else item.name }}@pam'
   with_items:
   - "{{ users }}"
   when: item.state != 'absent' and 'proxmox' in group_names
@@ -63,7 +63,7 @@
 
 - name: disable pve user
   command:
-    cmd: 'pveum usermod {{ item.name }}@pam -enable 0'
+    cmd: 'pveum usermod {{ item.username if item.username is defined else item.name }}@pam -enable 0'
   with_items:
   - "{{ users }}"
   when: item.state == 'absent' and 'proxmox' in group_names
@@ -71,7 +71,7 @@
 
 - name: add user to pve admin group
   command:
-    cmd: 'pveum usermod {{ item.name }}@pam -group admin'
+    cmd: 'pveum usermod {{ item.username if item.username is defined else item.name }}@pam -group admin'
   with_items:
   - "{{ users }}"
   when: item.state != 'absent' and 'proxmox' in group_names
