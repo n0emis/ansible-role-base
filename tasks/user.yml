@@ -33,7 +33,7 @@
                   state=present
   with_items:
   - "{{ users }}"
-  when: item.state != 'absent' and item.public_key is defined
+  when: item.state != 'absent' and item.public_key is defined and item.sudo is defined and item.sudo
 
 - name: remove user from root's authorized_keys
   authorized_key: user="root" manage_dir=true key="{{ item.public_key }}"
