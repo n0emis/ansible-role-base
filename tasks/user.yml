@@ -74,4 +74,4 @@
     cmd: 'pveum usermod {{ item.username if item.username is defined else item.name }}@pam -group admin'
   with_items:
   - "{{ users }}"
-  when: item.state != 'absent' and 'proxmox' in group_names
+  when: item.state != 'absent' and 'proxmox' in group_names and item.sudo is defined and item.sudo
