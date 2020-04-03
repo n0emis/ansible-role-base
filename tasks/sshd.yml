@@ -4,6 +4,7 @@
     path: /etc/ssh/sshd_config
     regexp: '^#?AuthenticationMethods '
     line: 'AuthenticationMethods publickey'
+  when: not ssh_allow_password
   notify: reload sshd service
 
 - name: Disable SSH password authentication
@@ -11,4 +12,21 @@
     path: /etc/ssh/sshd_config
     regexp: '^#?PasswordAuthentication '
     line: 'PasswordAuthentication no'
+  when: not ssh_allow_password
+  notify: reload sshd service
+
+- name: Restrict SSH to public key and password authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?AuthenticationMethods '
+    line: 'AuthenticationMethods publickey password'
+  when: ssh_allow_password
+  notify: reload sshd service
+
+- name: Enable SSH password authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?PasswordAuthentication '
+    line: 'PasswordAuthentication yes'
+  when: ssh_allow_password
   notify: reload sshd service

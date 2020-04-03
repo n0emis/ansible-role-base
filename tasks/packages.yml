@@ -1,8 +1,8 @@
 ---
 - name: Update and upgrade apt packages
   apt:
-    upgrade: 'yes'
-    update_cache: 'yes'
+    upgrade: dist
+    update_cache: yes
     cache_valid_time: 86400 # One day
 
 - name: install a default set of packages
@@ -22,13 +22,13 @@
     - zip
     - unzip
     - zsh
-    - python-pip
-    - python3-pip
-    - python-setuptools
-    - python3-setuptools
     - rsync
     - gnupg
     - sudo
     - curl
+    - python-pip
+    - python3-pip
+    - python-setuptools
+    - python3-setuptools
     state: present
   tags: packages
