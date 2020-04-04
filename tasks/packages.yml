@@ -30,5 +30,6 @@
     - python3-pip
     - python-setuptools
     - python3-setuptools
+    - python3-venv
     state: present
   tags: packages
