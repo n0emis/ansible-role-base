@@ -26,9 +26,7 @@
     - gnupg
     - sudo
     - curl
-    - python-pip
     - python3-pip
-    - python-setuptools
     - python3-setuptools
     - python3-venv
     state: present
