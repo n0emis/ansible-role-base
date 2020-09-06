@@ -6,3 +6,5 @@ users:
 system_locale: en_US.UTF-8
 ssh_allow_password: no
 base_upgrade: yes
+
+base_additional_packages: []

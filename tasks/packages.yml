@@ -31,3 +31,9 @@
     - python3-venv
     state: present
   tags: packages
+
+- name: Install additional packages
+  package:
+    name: "{{ base_additional_packages }}"
+    state: present
+  tags: packages
