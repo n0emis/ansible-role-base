@@ -15,3 +15,7 @@
 - name: Configure locale to '{{ system_locale }}'
   command: localectl set-locale LANG={{ system_locale }}
   changed_when: locale_lang != system_locale
+
+- name: Configure Timezone
+  timezone:
+    name: "{{ system_timezone }}" 

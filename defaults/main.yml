@@ -4,6 +4,7 @@ users:
 - { name: 'nouser', state: 'absent', public_key: '' }
 
 system_locale: en_US.UTF-8
+system_timezone: "Europe/Berlin"
 ssh_allow_password: no
 base_upgrade: yes
 
