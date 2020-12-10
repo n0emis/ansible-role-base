@@ -6,6 +6,7 @@
 - name: Get current locale and language configuration
   command: localectl status
   register: locale_status
+  check_mode: no
   changed_when: false
 
 - name: Parse 'LANG' from current locale and language configuration

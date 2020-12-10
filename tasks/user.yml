@@ -10,6 +10,7 @@
 - name: get bash's path
   command: which bash
   register: bash_path
+  check_mode: no
   changed_when: false
 
 - name: create user
