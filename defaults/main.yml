@@ -8,4 +8,26 @@ system_timezone: "Europe/Berlin"
 ssh_allow_password: no
 base_upgrade: yes
 
+base_packages:
+  - vim
+  - nano
+  - htop
+  - git
+  - tmux
+  - screen
+  - byobu
+  - ncdu
+  - moreutils
+  - apt-transport-https
+  - smartmontools
+  - zip
+  - unzip
+  - zsh
+  - rsync
+  - gnupg
+  - sudo
+  - curl
+  - python3-pip
+  - python3-setuptools
+  - python3-venv
 base_additional_packages: []

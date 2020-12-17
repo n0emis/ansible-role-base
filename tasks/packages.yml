@@ -7,28 +7,7 @@
 
 - name: install a default set of packages
   package:
-    name:
-    - vim
-    - nano
-    - htop
-    - git
-    - tmux
-    - screen
-    - byobu
-    - ncdu
-    - moreutils
-    - apt-transport-https
-    - smartmontools
-    - zip
-    - unzip
-    - zsh
-    - rsync
-    - gnupg
-    - sudo
-    - curl
-    - python3-pip
-    - python3-setuptools
-    - python3-venv
+    name: "{{ base_packages }}"
     state: present
   tags: packages
 
