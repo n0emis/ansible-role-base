@@ -7,6 +7,12 @@
   with_items:
   - "{{ users }}"
 
+- name: Ensure all groups are present or absent
+  group:
+    name: '{{ item.name | default(item) }}'
+    state: '{{ item.state | default("present") }}'
+  with_items: '{{ user_groups }}'
+
 - name: get bash's path
   command: which bash
   register: bash_path
@@ -14,10 +20,15 @@
   changed_when: false
 
 - name: create user
-  user: state=present
-        name="{{ item.username if item.username is defined else item.name }}"
-        groups="{{ "sudo,adm" if item.sudo is defined and item.sudo }}" append=yes
-        shell={{ item.shell | default(bash_path.stdout) }}
+  user:
+    state: present
+    name: "{{ item.username if item.username is defined else item.name }}"
+    groups:
+      - "{{ item.groups | default([]) | join(',')}}"
+      - "{{ 'sudo,adm' if item.sudo is defined and item.sudo }}"
+    append: true
+    shell: '{{ item.shell | default(bash_path.stdout) }}'
+    home: "{{ item.home | default('/home/' + (item.username | default(item.name))) }}"
   with_items:
   - "{{ users }}"
   when: item.state != 'absent'
