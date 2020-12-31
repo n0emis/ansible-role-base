@@ -1,4 +1,6 @@
 ---
+user_groups: []
+
 users:
 - { name: 'user', state: 'present', public_key: '' }
 - { name: 'nouser', state: 'absent', public_key: '' }
